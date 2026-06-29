@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clarity - Digital Solutions Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --orange: #e05a1a;
+      --orange-dark: #c44d12;
+      --orange-light: #fff3ed;
+      --dark: #1a1a1a;
+      --gray: #555;
+    }
+    * { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', sans-serif; background: #fff; color: var(--dark); }
+
+    /* ── navbar ── */
+    .navbar { background: #fff; border-bottom: 1px solid #f0f0f0; padding: .9rem 2rem; }
+    .navbar-brand { font-weight: 800; font-size: 1.3rem; color: var(--orange) !important; display: flex; align-items: center; gap: 8px; }
+    .brand-icon { background: var(--orange); color: #fff; border-radius: 10px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: .9rem; font-weight: 800; }
+    .nav-link { color: #333 !important; font-weight: 500; font-size: .95rem; }
+    .nav-link.active { color: var(--orange) !important; text-decoration: underline; text-underline-offset: 4px; }
+    .nav-link:hover { color: var(--orange) !important; }
+    .btn-signin { color: #333 !important; font-weight: 600; }
+    .btn-getstarted { background: var(--orange); color: #fff !important; border-radius: 50px; padding: .5rem 1.4rem; font-weight: 600; border: none; }
+    .btn-getstarted:hover { background: var(--orange-dark); }
+
+    /* Mega Dropdown */
+    .mega-menu { min-width: 580px; padding: 1.5rem; border: none; box-shadow: 0 20px 60px rgba(0,0,0,.12); border-radius: 14px; }
+    .mega-menu h6 { color: var(--orange); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .75rem; }
+    .mega-menu .dropdown-item { color: #333; border-radius: 8px; padding: .45rem .75rem; font-size: .875rem; font-weight: 500; }
+    .mega-menu .dropdown-item:hover { background: var(--orange-light); color: var(--orange); }
+    .mega-menu .dropdown-item small { display: block; color: #9ca3af; font-size: .73rem; font-weight: 400; }
+    .mega-cta { background: var(--orange-light); border-radius: 10px; padding: 1rem; }
+    .mega-cta h6 { color: #111; font-size: .875rem; text-transform: none; letter-spacing: 0; margin-bottom: .3rem; }
+
+    /* ── Hero ── */
+    .hero {
+      background: #fff;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 0 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-badge {
+      background: var(--orange-light);
+      color: var(--orange);
+      border-radius: 50px;
+      font-size: .82rem;
+      font-weight: 600;
+      padding: .4rem 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 .orange { color: var(--orange); }
+    .hero p { color: #555; font-size: 1.05rem; max-width: 520px; line-height: 1.7; }
+    .btn-start {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: .85rem 2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all .2s;
+    }
+    .btn-start:hover { background: var(--orange-dark); color: #fff; transform: translateY(-2px); }
+    .btn-demo {
+      background: transparent;
+      border: 2px solid #ddd;
+      color: #333;
+      border-radius: 50px;
+      padding: .85rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all .2s;
+    }
+    .btn-demo:hover { border-color: var(--orange); color: var(--orange); }
+    .hero-stat h3 { font-size: 2.2rem; font-weight: 800; color: var(--orange); margin: 0; }
+    .hero-stat p { color: #666; font-size: .875rem; margin: 0; }
+
+    /* Hero image */
+    .hero-img-wrap {
+      position: relative;
+    }
+    .hero-img {
+      border-radius: 20px;
+      width: 100%;
+      object-fit: cover;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    }
+    .hero-code-badge {
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      background: var(--orange);
+      color: #fff;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(224,90,26,.4);
+    }
+    .hero-bottom-badge {
+      position: absolute;
+      bottom: -16px;
+      left: -16px;
+      background: var(--orange);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    /* ── services ── */
+    .services-section { background: #f9fafb; padding: 80px 0; }
+    .section-tag { color: var(--orange); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+    .service-card {
+      background: #fff;
+      border: 1.5px solid #eee;
+      border-radius: 16px;
+      padding: 2rem;
+      height: 100%;
+      transition: all .25s;
+    }
+    .service-card:hover { border-color: var(--orange); box-shadow: 0 12px 40px rgba(224,90,26,.1); transform: translateY(-4px); }
+    .service-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.2rem; }
+    .service-card ul { list-style: none; padding: 0; margin: 1rem 0; }
+    .service-card ul li { font-size: .875rem; color: #64748b; padding: .25rem 0; }
+    .service-card ul li::before { content: '✓ '; color: var(--orange); font-weight: 700; }
+    .learn-more { color: var(--orange); font-weight: 600; font-size: .875rem; text-decoration: none; }
+    .learn-more:hover { text-decoration: underline; }
+
+    /* ── technology ── */
+    .tech-section { background: #fff; padding: 80px 0; }
+    .nav-tabs-tech { border: none; gap: .5rem; flex-wrap: wrap; }
+    .nav-tabs-tech .nav-link { border: 1.5px solid #e2e8f0; color: #555; border-radius: 50px; padding: .45rem 1.2rem; font-size: .875rem; background: transparent; transition: all .2s; }
+    .nav-tabs-tech .nav-link.active, .nav-tabs-tech .nav-link:hover { background: var(--orange); border-color: var(--orange); color: #fff; }
+    .tech-card { background: #f9fafb; border: 1.5px solid #eee; border-radius: 14px; padding: 1.4rem; transition: all .2s; text-align: center; }
+    .tech-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+    .tech-badge { background: #fff3ed; color: var(--orange); border-radius: 50px; font-size: .7rem; font-weight: 600; padding: .2rem .65rem; }
+    .tech-card h6 { color: #111; font-weight: 700; margin: .5rem 0 .3rem; }
+    .tech-card p { color: #888; font-size: .78rem; margin: 0; }
+
+    /* ── testimonials ── */
+    .testimonials-section { background: #f9fafb; padding: 80px 0; }
+    .testi-card { background: #fff; border: 1.5px solid #eee; border-radius: 16px; padding: 1.8rem; height: 100%; }
+    .stars { color: #f59e0b; font-size: .9rem; }
+    .verified-badge { background: #dcfce7; color: #16a34a; font-size: .7rem; font-weight: 700; border-radius: 50px; padding: .2rem .65rem; }
+    .testi-card blockquote { color: #374151; font-size: .9rem; font-style: italic; line-height: 1.65; border: none; padding: 0; margin: 1rem 0; }
+    .testi-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .testi-name { font-weight: 700; font-size: .9rem; color: #111; margin: 0; }
+    .testi-role { font-size: .78rem; color: #6b7280; margin: 0; }
+    .li-badge { background: #0077b5; color: #fff; font-size: .68rem; font-weight: 700; border-radius: 4px; padding: .1rem .4rem; }
+
+    /* ── faq ── */
+    .faq-section { padding: 80px 0; background: #fff; }
+    .accordion-button { font-weight: 600; font-size: .95rem; color: #0f172a; }
+    .accordion-button:not(.collapsed) { color: var(--orange); background: var(--orange-light); box-shadow: none; }
+    .accordion-button:focus { box-shadow: none; }
+    .accordion-button::after { filter: none; }
+    .accordion-button:not(.collapsed)::after { filter: none; }
+    .accordion-item { border: 1.5px solid #e2e8f0; border-radius: 12px !important; margin-bottom: .75rem; overflow: hidden; }
+    .accordion-body { color: #4b5563; font-size: .9rem; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    .contact-section { background: #f9fafb; padding: 80px 0; }
+    .contact-form-card { background: #fff; border-radius: 20px; padding: 2.5rem; box-shadow: 0 4px 30px rgba(0,0,0,.07); }
+    .contact-form-card label { font-weight: 600; font-size: .85rem; color: #374151; }
+    .contact-form-card .form-control,
+    .contact-form-card .form-select { border: 1.5px solid #e2e8f0; border-radius: 10px; padding: .65rem 1rem; font-size: .9rem; }
+    .contact-form-card .form-control:focus,
+    .contact-form-card .form-select:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(224,90,26,.1); }
+    .budget-btn { border: 1.5px solid #e2e8f0; border-radius: 10px; padding: .75rem 1rem; background: #fff; text-align: center; cursor: pointer; transition: all .2s; width: 100%; }
+    .budget-btn:hover, .budget-btn.active { border-color: var(--orange); background: var(--orange-light); }
+    .budget-btn .price { font-weight: 700; color: var(--orange); font-size: .95rem; }
+    .budget-btn .label { font-size: .75rem; color: #6b7280; }
+    .btn-submit { background: var(--orange); color: #fff; border: none; border-radius: 10px; padding: .9rem; font-size: 1rem; font-weight: 600; width: 100%; transition: opacity .2s; }
+    .btn-submit:hover { background: var(--orange-dark); color: #fff; }
+
+    /* Why section */
+    .why-card { background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+    .why-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+    .why-icon { width: 44px; height: 44px; background: var(--orange-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--orange); font-size: 1.2rem; flex-shrink: 0; }
+    .why-item h6 { color: #111; font-weight: 700; margin: 0 0 .2rem; }
+    .why-item p { color: #666; font-size: .82rem; margin: 0; }
+    .contact-info { display: flex; align-items: center; gap: .75rem; color: #555; font-size: .875rem; margin-bottom: .75rem; }
+    .contact-info i { color: var(--orange); }
+
+    /* ── FOOTER ── */
+    footer { background: #1a1a1a; padding: 40px 0 20px; }
+    .footer-brand { font-weight: 800; font-size: 1.3rem; color: var(--orange); }
+    footer p { color: rgba(255,255,255,.4); font-size: .85rem; }
+    footer .copy { color: rgba(255,255,255,.3); font-size: .8rem; border-top: 1px solid rgba(255,255,255,.08); padding-top: 1.5rem; margin-top: 1.5rem; }
+    .social-btn { width: 36px; height: 36px; background: rgba(255,255,255,.08); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6); transition: all .2s; text-decoration: none; }
+    .social-btn:hover { background: var(--orange); color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- ══ ═ NAVBAR ═ ═ -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <div class="brand-icon">C</div>
+      Clarity
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <i class="bi bi-list fs-4"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav mx-auto gap-1 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link active" href="#hero">Home</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Services</a>
+          <div class="dropdown-menu mega-menu">
+            <div class="row">
+              <div class="col-md-4">
+                <h6>Development</h6>
+                <a class="dropdown-item" href="#services">Web Development<small>Custom web applications & websites</small></a>
+                <a class="dropdown-item" href="#services">Mobile Apps<small>iOS & Android native apps</small></a>
+                <a class="dropdown-item" href="#services">UI/UX Design<small>User-centered design solutions</small></a>
+              </div>
+              <div class="col-md-4">
+                <h6>Infrastructure & AI</h6>
+                <a class="dropdown-item" href="#services">Cloud Solutions<small>Scalable cloud infrastructure</small></a>
+                <a class="dropdown-item" href="#services">AI & Machine Learning<small>Intelligent automation solutions</small></a>
+                <a class="dropdown-item" href="#services">Data Solutions<small>Database & analytics platforms</small></a>
+              </div>
+              <div class="col-md-4">
+                <h6>Marketing</h6>
+                <a class="dropdown-item" href="#services">Digital Marketing<small>SEO, SEM & social media</small></a>
+                <a class="dropdown-item" href="#services">Content Strategy<small>Engaging content creation</small></a>
+                <div class="mega-cta mt-3">
+                  <h6>Need help choosing?</h6>
+                  <p class="text-muted mb-2" style="font-size:.78rem;">Talk to our experts to find the perfect solution.</p>
+                  <a href="#contact" class="btn btn-sm" style="background:var(--orange);color:#fff;border-radius:8px;">Contact us</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#technology">Technology</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+      <div class="d-flex gap-3 mt-3 mt-lg-0 align-items-center">
+        <a href="#" class="btn-signin nav-link">Sign In</a>
+        <a href="#contact" class="btn btn-getstarted">Get Started</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="hero-badge"><i class="bi bi-rocket-takeoff-fill"></i> Transforming Digital Experiences</div>
+        <h1>Digital Solutions<br>That Drive<br><span class="orange">Growth</span></h1>
+        <p class="mt-3 mb-4">We craft innovative digital experiences that transform businesses and accelerate growth. From cutting-edge web applications to mobile solutions, we deliver technology that makes a difference.</p>
+        <div class="d-flex gap-3 flex-wrap mb-5">
+          <a href="#contact" class="btn btn-start">Start Your Project →</a>
+          <a href="#" class="btn btn-demo"><i class="bi bi-play-fill me-1"></i> Watch Demo</a>
+        </div>
+        <div class="row g-4">
+          <div class="col-4 hero-stat"><h3>500+</h3><p>Projects Delivered</p></div>
+          <div class="col-4 hero-stat"><h3>98%</h3><p>Client Satisfaction</p></div>
+          <div class="col-4 hero-stat"><h3>24/7</h3><p>Support</p></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-img-wrap">
+          <div class="hero-code-badge">&lt;/&gt;</div>
+          <img src="image/hero-img-sGwnWbTh.png" alt="Digital workspace" class="hero-img"/>
+          <div class="hero-bottom-badge"><i class="bi bi-stop-fill"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SERVICES ════ -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-tag mb-2">Our Services</div>
+      <h2 class="fw-bold fs-2">Comprehensive Digital Solutions</h2>
+      <p class="text-muted mx-auto" style="max-width:560px;">From concept to deployment, we provide end-to-end digital services that transform your business and engage your customers.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:#fff3ed;"><i class="bi bi-code-slash" style="color:var(--orange);"></i></div>
+          <h5 class="fw-bold">Web Development</h5>
+          <p class="text-muted" style="font-size:.875rem;">Custom web applications built with cutting-edge technologies. Responsive, scalable, and optimized for performance.</p>
+          <ul><li>React & Next.js Development</li><li>E-commerce Solutions</li><li>Progressive Web Apps</li></ul>
+          <a href="#" class="learn-more">Learn More →</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:#e0f2fe;"><i class="bi bi-phone" style="color:#0284c7;"></i></div>
+          <h5 class="fw-bold">Mobile Applications</h5>
+          <p class="text-muted" style="font-size:.875rem;">Native and cross-platform mobile apps that deliver exceptional user experiences across all devices.</p>
+          <ul><li>iOS & Android Development</li><li>React Native & Flutter</li><li>App Store Optimization</li></ul>
+          <a href="#" class="learn-more">Learn More →</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:#dcfce7;"><i class="bi bi-cloud" style="color:#16a34a;"></i></div>
+          <h5 class="fw-bold">Cloud Solutions</h5>
+          <p class="text-muted" style="font-size:.875rem;">Scalable cloud infrastructure and services that grow with your business needs and ensure maximum uptime.</p>
+          <ul><li>AWS & Azure Integration</li><li>DevOps & CI/CD</li><li>Microservices Architecture</li></ul>
+          <a href="#" class="learn-more">Learn More →</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:#fef9c3;"><i class="bi bi-cpu" style="color:#ca8a04;"></i></div>
+          <h5 class="fw-bold">AI & Machine Learning</h5>
+          <p class="text-muted" style="font-size:.875rem;">Intelligent solutions powered by artificial intelligence and machine learning to automate and optimize processes.</p>
+          <ul><li>Predictive Analytics</li><li>Natural Language Processing</li><li>Computer Vision</li></ul>
+          <a href="#" class="learn-more">Learn More →</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:#fce7f3;"><i class="bi bi-graph-up-arrow" style="color:#db2777;"></i></div>
+          <h5 class="fw-bold">Digital Marketing</h5>
+          <p class="text-muted" style="font-size:.875rem;">Data-driven marketing strategies that increase brand visibility and drive customer engagement across all channels.</p>
+          <ul><li>SEO & SEM Optimization</li><li>Social Media Management</li><li>Content Strategy</li></ul>
+          <a href="#" class="learn-more">Learn More →</a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="service-card">
+          <div class="service-icon" style="background:#fff3ed;"><i class="bi bi-palette" style="color:var(--orange);"></i></div>
+          <h5 class="fw-bold">UI/UX Design</h5>
+          <p class="text-muted" style="font-size:.875rem;">User-centered design that creates intuitive, beautiful, and accessible digital experiences that users love.</p>
+          <ul><li>User Research & Testing</li><li>Wireframing & Prototyping</li><li>Design Systems</li></ul>
+          <a href="#" class="learn-more">Learn More →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TECHNOLOGY ════ -->
+<section class="tech-section" id="technology">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-tag mb-2">Technology Stack</div>
+      <h2 class="fw-bold fs-2">Cutting-Edge Technologies</h2>
+      <p class="text-muted mx-auto" style="max-width:560px;">We leverage the latest technologies and frameworks to build scalable, secure, and high-performance solutions.</p>
+    </div>
+    <ul class="nav nav-tabs-tech justify-content-center mb-4" id="techTabs">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#frontend">Frontend</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#backend">Backend</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#mobile">Mobile</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#cloud">Cloud & DevOps</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#database">Database</button></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="frontend">
+        <div class="row g-3">
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;">⚛</div><h6>React.js</h6><p>Interactive UIs</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">JSX</span><span class="tech-badge">Hooks</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;">▲</div><h6>Next.js</h6><p>Full-stack React</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">SSR</span><span class="tech-badge">SSG</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#42b883;">V</div><h6>Vue.js</h6><p>Progressive UI</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Vuex</span><span class="tech-badge">Nuxt</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#dd0031;">A</div><h6>Angular</h6><p>Enterprise apps</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">TS</span><span class="tech-badge">RxJS</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#06b6d4;">TW</div><h6>Tailwind</h6><p>Utility CSS</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">JIT</span><span class="tech-badge">DX</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#a259ff;">⚡</div><h6>Vite</h6><p>Fast tooling</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">HMR</span><span class="tech-badge">ESM</span></div></div></div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="backend">
+        <div class="row g-3">
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#339933;">⬡</div><h6>Node.js</h6><p>JS Runtime</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Express</span><span class="tech-badge">NPM</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;">🐍</div><h6>Python</h6><p>Versatile lang</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Django</span><span class="tech-badge">Flask</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#00add8;">Go</div><h6>Golang</h6><p>Fast & typed</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Gin</span><span class="tech-badge">Micro</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;">☕</div><h6>Java</h6><p>Enterprise</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Spring</span><span class="tech-badge">Maven</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#512bd4;">.NET</div><h6>.NET Core</h6><p>Cross-platform</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">C#</span><span class="tech-badge">Azure</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#cc342d;">💎</div><h6>Ruby</h6><p>Productivity</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Rails</span><span class="tech-badge">Sinatra</span></div></div></div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="mobile">
+        <div class="row g-3">
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;">⚛</div><h6>React Native</h6><p>Cross-platform</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Expo</span><span class="tech-badge">Redux</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#54c5f8;">🐦</div><h6>Flutter</h6><p>Google UI kit</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Dart</span><span class="tech-badge">Material</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;">🍎</div><h6>iOS Native</h6><p>Swift & Xcode</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Swift</span><span class="tech-badge">SwiftUI</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#3ddc84;">🤖</div><h6>Android</h6><p>Kotlin native</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Kotlin</span><span class="tech-badge">Jetpack</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#512bd4;">X</div><h6>Xamarin</h6><p>C# & .NET</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">C#</span><span class="tech-badge">MVVM</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;">📱</div><h6>PWA</h6><p>Web native</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">SW</span><span class="tech-badge">Offline</span></div></div></div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="cloud">
+        <div class="row g-3">
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#ff9900;">☁</div><h6>AWS</h6><p>Cloud platform</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">EC2</span><span class="tech-badge">S3</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#0089d6;">☁</div><h6>Azure</h6><p>Microsoft cloud</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Functions</span><span class="tech-badge">DevOps</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#4285f4;">☁</div><h6>GCP</h6><p>Google cloud</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">BigQuery</span><span class="tech-badge">Run</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#2496ed;">🐳</div><h6>Docker</h6><p>Containers</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Images</span><span class="tech-badge">Compose</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#326ce5;">K8s</div><h6>Kubernetes</h6><p>Orchestration</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Pods</span><span class="tech-badge">Helm</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;">⚙</div><h6>CI/CD</h6><p>Automation</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Jenkins</span><span class="tech-badge">GH</span></div></div></div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="database">
+        <div class="row g-3">
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#336791;">🐘</div><h6>PostgreSQL</h6><p>Relational DB</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">ACID</span><span class="tech-badge">JSON</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#47a248;">🍃</div><h6>MongoDB</h6><p>NoSQL docs</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Docs</span><span class="tech-badge">Atlas</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#dc382d;">⚡</div><h6>Redis</h6><p>In-memory</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Cache</span><span class="tech-badge">Pub/Sub</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#4479a1;">🐬</div><h6>MySQL</h6><p>Popular RDBMS</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">InnoDB</span><span class="tech-badge">Cluster</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#f8a526;">🔍</div><h6>Elasticsearch</h6><p>Search engine</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Search</span><span class="tech-badge">Kibana</span></div></div></div>
+          <div class="col-6 col-md-4 col-lg-2"><div class="tech-card"><div style="font-size:1.5rem;color:#e535ab;">◈</div><h6>GraphQL</h6><p>Flexible APIs</p><div class="d-flex gap-1 flex-wrap mt-2 justify-content-center"><span class="tech-badge">Schema</span><span class="tech-badge">Apollo</span></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testimonials-section" id="testimonials">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-tag mb-2">Client Testimonials</div>
+      <h2 class="fw-bold fs-2">What Our Clients Say</h2>
+      <p class="text-muted mx-auto" style="max-width:520px;">Don't just take our word for it. Here's what our clients have to say about working with us.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="testi-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="stars">★★★★★ <small class="text-muted ms-1">5.0 Rating</small></div>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <blockquote>"Clarity transformed our entire digital presence. Their team's expertise and dedication resulted in a 300% increase in our online sales. Absolutely phenomenal work!"</blockquote>
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <div class="d-flex align-items-center gap-2">
+              <img src="image/avatar-1-CwUcGkzI.jpg" class="testi-avatar" alt="Ahmed"/>
+              <div><p class="testi-name">Ahmed Al-Farsi</p><p class="testi-role">CEO, RetailMax</p></div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testi-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="stars">★★★★★ <small class="text-muted ms-1">5.0 Rating</small></div>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <blockquote>"The telemedicine platform they built for us has revolutionized how we serve our patients. The security, reliability, and user experience are all top-notch."</blockquote>
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <div class="d-flex align-items-center gap-2">
+              <img src="image/avatar-2-DvihTPKl.jpg" class="testi-avatar" alt="Dr. Michael"/>
+              <div><p class="testi-name">Dr. Michael Chen</p><p class="testi-role">Director, MedCare</p></div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testi-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="stars">★★★★★ <small class="text-muted ms-1">5.0 Rating</small></div>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <blockquote>"Working with Clarity was a game-changer. Their mobile banking app exceeded all our expectations and has processed over $1 billion in transactions."</blockquote>
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <div class="d-flex align-items-center gap-2">
+              <img src="image/avatar-3-MKRsHcFc.jpg" class="testi-avatar" alt="Eslam"/>
+              <div><p class="testi-name">Eslam Salah</p><p class="testi-role">CTO, FinanceFlow</p></div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testi-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="stars">★★★★★ <small class="text-muted ms-1">5.0 Rating</small></div>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <blockquote>"The AI-powered analytics dashboard they created has given us insights we never had before. Our decision-making process has become so much more data-driven."</blockquote>
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <div class="d-flex align-items-center gap-2">
+              <img src="image/avatar-4-CDQD_dyw.jpg" class="testi-avatar" alt="James"/>
+              <div><p class="testi-name">James Wilson</p><p class="testi-role">VP of Operations, TechCorp</p></div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="testi-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="stars">★★★★★ <small class="text-muted ms-1">5.0 Rating</small></div>
+            <span class="verified-badge">Verified</span>
+          </div>
+          <blockquote>"Their cloud migration service was flawless. Zero downtime, improved performance, and significant cost savings. The team's expertise is unmatched."</blockquote>
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <div class="d-flex align-items-center gap-2">
+              <img src="image/avatar-4-CDQD_dyw.jpg" class="testi-avatar" alt="Omar"/>
+              <div><p class="testi-name">Omar Wael</p><p class="testi-role">IT Director, GlobalTech</p></div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="faq-section" id="faq">
+  <div class="container" style="max-width:800px;">
+    <div class="text-center mb-5">
+      <div class="section-tag mb-2">FAQ</div>
+      <h2 class="fw-bold fs-2">Frequently Asked Questions</h2>
+      <p class="text-muted">Find answers to common questions about our services, process, and how we can help transform your business.</p>
+    </div>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#faq1">What services does Clarity offer?</button></h2>
+        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">We offer a comprehensive range of digital services including web development, mobile applications, cloud solutions, AI & machine learning, digital marketing, and UI/UX design.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq2">How long does a typical project take?</button></h2>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Project timelines vary based on complexity and scope. A simple website might take 4-6 weeks, while a complex web application or mobile app could take 3-6 months.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq3">What is your development process?</button></h2>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">We follow an agile methodology: <strong>Discovery & Planning → Design → Development → Testing → Deployment</strong>. We keep you updated throughout with regular milestones.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq4">Do you provide ongoing support and maintenance?</button></h2>
+        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Yes! We offer comprehensive support and maintenance packages including bug fixes, security updates, performance optimization, and feature enhancements.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq5">What technologies do you work with?</button></h2>
+        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">React, Vue.js, Angular, Next.js for frontend; Node.js, Python, Golang, Java for backend; AWS, Azure, Google Cloud for infrastructure; and both SQL and NoSQL databases.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq6">How do you ensure project security and data privacy?</button></h2>
+        <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Security is our top priority. We implement encryption, secure authentication, regular security audits, and compliance with GDPR and HIPAA. All developers sign NDAs.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-tag mb-2">Let's Start Your Journey</div>
+      <h2 class="fw-bold fs-2">Ready to <span style="color:var(--orange);">Transform?</span></h2>
+      <p class="text-muted">Take the first step towards digital excellence. Our experts are ready to turn your vision into reality.</p>
+    </div>
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-7">
+        <div class="contact-form-card">
+          <h5 class="fw-bold mb-1">Get Your Free Consultation</h5>
+          <p class="text-muted" style="font-size:.875rem;">Fill out the form and we'll get back to you within 24 hours.</p>
+          <div class="row g-3 mt-1">
+            <div class="col-6"><label>First Name *</label><input type="text" class="form-control" placeholder="John"/></div>
+            <div class="col-6"><label>Last Name *</label><input type="text" class="form-control" placeholder="Doe"/></div>
+            <div class="col-6"><label>Email Address *</label><input type="email" class="form-control" placeholder="john@example.com"/></div>
+            <div class="col-6"><label>Company</label><input type="text" class="form-control" placeholder="Your Company"/></div>
+            <div class="col-6">
+              <label>Primary Interest</label>
+              <select class="form-select">
+                <option>Choose your focus area</option>
+                <option>Web Development & Design</option>
+                <option>Mobile App Development</option>
+                <option>Cloud & Infrastructure</option>
+                <option>AI & Machine Learning</option>
+                <option>Digital Marketing & SEO</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label>Timeline</label>
+              <select class="form-select">
+                <option>When do you want to start?</option>
+                <option>Immediately</option>
+                <option>Within 1 month</option>
+                <option>Within 3 months</option>
+                <option>Just exploring</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label>Project Budget Range</label>
+              <div class="row g-2 mt-1">
+                <div class="col-4"><div class="budget-btn" onclick="selectBudget(this)"><div class="price">$25K – $50K</div><div class="label">Growth</div></div></div>
+                <div class="col-4"><div class="budget-btn" onclick="selectBudget(this)"><div class="price">$50K – $100K</div><div class="label">Scale</div></div></div>
+                <div class="col-4"><div class="budget-btn" onclick="selectBudget(this)"><div class="price">$100K+</div><div class="label">Enterprise</div></div></div>
+              </div>
+            </div>
+            <div class="col-12"><label>Tell us about your project</label><textarea class="form-control" rows="4" placeholder="Describe your project goals..."></textarea></div>
+            <div class="col-12"><div class="form-check"><input type="checkbox" class="form-check-input" id="agree"/><label class="form-check-label text-muted" for="agree" style="font-size:.85rem;">I agree to receive communications and accept the <a href="#" style="color:var(--orange);">Privacy Policy</a></label></div></div>
+            <div class="col-12"><button class="btn btn-submit">Get My Free Consultation</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="why-card">
+          <h5 class="fw-bold mb-4">Why Choose Clarity?</h5>
+          <div class="why-item"><div class="why-icon"><i class="bi bi-lightning-charge"></i></div><div><h6>24-Hour Response</h6><p>Quick turnaround on all inquiries with detailed project analysis</p></div></div>
+          <div class="why-item"><div class="why-icon"><i class="bi bi-shield-check"></i></div><div><h6>100% Satisfaction</h6><p>Money-back guarantee if you're not completely satisfied</p></div></div>
+          <div class="why-item"><div class="why-icon"><i class="bi bi-people"></i></div><div><h6>Expert Team</h6><p>150+ certified professionals with 8+ years experience</p></div></div>
+          <hr/>
+          <h6 class="fw-bold mb-3">Direct Contact</h6>
+          <div class="contact-info"><i class="bi bi-telephone"></i> +1 (555) 123-4567</div>
+          <div class="contact-info"><i class="bi bi-envelope"></i> hello@clarity.com</div>
+          <div class="contact-info"><i class="bi bi-geo-alt"></i> San Francisco, CA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="footer-brand">Clarity</div>
+        <p class="mt-1">Transforming businesses through innovative digital solutions and cutting-edge technology.</p>
+      </div>
+      <div class="col-md-6 text-md-end mt-3 mt-md-0">
+        <a href="#" class="social-btn me-2"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="social-btn me-2"><i class="bi bi-linkedin"></i></a>
+        <a href="#" class="social-btn me-2"><i class="bi bi-github"></i></a>
+        <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+      </div>
+    </div>
+    <div class="copy text-center">© 2025 Clarity. All rights reserved. &nbsp;·&nbsp; Made with ❤ for amazing experiences</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function selectBudget(el) {
+    document.querySelectorAll('.budget-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+</script>
+</body>
+</html>
